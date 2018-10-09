@@ -4,30 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_gray_bg"
-    android:orientation="vertical"
-    tools:context="com.aiprous.deliveryboy.instaorder.InstaProductDetailActivity">
+    android:background="@color/color_gray_bg">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtLatestOrder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/height_8"
-            android:layout_marginTop="@dimen/height_5"
-            android:layout_marginRight="@dimen/height_8"
-            android:fontFamily="@font/open_sans_regular"
-            android:padding="@dimen/height_8"
-            android:text="Sales"
-            android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,79 +16,85 @@
             android:orientation="vertical"
             android:weightSum="1">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtLatestOrder"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/height_8"
+                android:layout_marginTop="@dimen/height_5"
                 android:layout_marginRight="@dimen/height_8"
-                android:layout_weight="0.45"
-                android:orientation="vertical">
+                android:fontFamily="@font/open_sans_regular"
+                android:padding="@dimen/height_8"
+                android:text="Sales"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
-                <android.support.v7.widget.CardView
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginLeft="@dimen/height_8"
+                android:layout_marginTop="@dimen/height_4"
+                android:layout_marginRight="@dimen/height_8"
+                android:layout_marginBottom="@dimen/height_4"
+                app:cardCornerRadius="@dimen/height_8"
+                app:cardElevation="@dimen/height_10">
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/height_4"
-                    android:layout_marginBottom="@dimen/height_4"
-                    app:cardCornerRadius="@dimen/height_8"
-                    app:cardElevation="@dimen/height_10">
+                    android:layout_margin="@dimen/height_10">
 
-                    <RelativeLayout
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/height_10">
+                        android:layout_above="@+id/llHeader"
+                        android:layout_marginBottom="@dimen/height_5" />
 
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/chart"
+                    <LinearLayout
+                        android:id="@+id/llHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal">
+
+                        <Button
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_above="@+id/llHeader"
-                            android:layout_marginBottom="@dimen/height_5" />
+                            android:layout_height="35dp"
+                            android:layout_marginRight="@dimen/height_3"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_btn_bg_yellow"
+                            android:text="yearly"
+                            android:textColor="@android:color/white" />
 
-                        <LinearLayout
-                            android:id="@+id/llHeader"
+                        <Button
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:orientation="horizontal">
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_btn_bg_yellow"
+                            android:text="monthly"
+                            android:textColor="@android:color/white" />
 
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_marginRight="@dimen/height_3"
-                                android:layout_weight="1"
-                                android:background="@drawable/custom_btn_bg_yellow"
-                                android:text="yearly"
-                                android:textColor="@android:color/white" />
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="@dimen/height_3"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_btn_bg"
+                            android:text="weekly"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
 
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/custom_btn_bg_yellow"
-                                android:text="monthly"
-                                android:textColor="@android:color/white" />
+                </RelativeLayout>
 
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_marginLeft="@dimen/height_3"
-                                android:layout_weight="1"
-                                android:background="@drawable/custom_btn_bg"
-                                android:text="weekly"
-                                android:textColor="@android:color/white" />
-                        </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-                    </RelativeLayout>
-
-                </android.support.v7.widget.CardView>
-
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.55"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
@@ -144,6 +131,8 @@
                         <RelativeLayout
                             android:id="@+id/relPendingOrder"
                             android:layout_width="match_parent"
+                            android:paddingTop="@dimen/height_6"
+                            android:paddingBottom="@dimen/height_6"
                             android:layout_height="wrap_content">
 
                             <ImageView
@@ -191,6 +180,8 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
+                            android:paddingTop="@dimen/height_6"
+                            android:paddingBottom="@dimen/height_6"
                             android:layout_height="wrap_content">
 
                             <ImageView
@@ -238,6 +229,8 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
+                            android:paddingTop="@dimen/height_6"
+                            android:paddingBottom="@dimen/height_6"
                             android:layout_height="wrap_content">
 
                             <ImageView
@@ -296,8 +289,18 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
-                .
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginTop="@dimen/height_10"
+                    tools:context=".activity.OrderTrackingActivity" />
+
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
 </RelativeLayout>
