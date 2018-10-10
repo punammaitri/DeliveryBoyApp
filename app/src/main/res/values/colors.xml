@@ -20,11 +20,10 @@
 
 
     //color code for pharmacist
-    <color name="color_sky_blue">#42B9F1</color>
-
-
-
-
+    <color name="color_sky_blue">#00aeef</color>
+    <color name="color_red">#ed1c24</color>
+    <color name="color_green">#39b54a</color>
+    <color name="color_orange">#f26522</color>
 
 
 </resources>

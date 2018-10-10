@@ -2,8 +2,12 @@ package com.aiprous.deliveryboy.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -16,10 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ahmadrosid.lib.drawroutemap.DrawMarker;
+import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.deliveryboy.MainActivity;
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.activity.OrderDetails;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -35,10 +42,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +65,9 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-
+    private LatLng mCurrentLatLng;
+    private String mCurrentAddress;
+    ArrayList<LatLng> MarkerPoints;
 
     @BindView(R.id.chart)
     BarChart mChart;
@@ -98,6 +111,8 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
 
     private void init() {
 
+        MarkerPoints = new ArrayList<>();
+
         BarData data = new BarData(getXAxisValues(), getDataSet());
         mChart.setData(data);
 
@@ -108,6 +123,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
         mChart.getAxisLeft().setEnabled(false);
         mChart.getAxisRight().setEnabled(false);
         mChart.getAxisLeft().setDrawGridLines(false);
+        //mChart.setDrawValueAboveBar(true);
 
         //for X axis
         XAxis xAxis = mChart.getXAxis();
@@ -115,11 +131,14 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawGridLines(false);
 
+        XAxis xLabels = mChart.getXAxis();
+        xLabels.setTextColor(R.color.colorlightlightlightGray);
+
+
         //for Y axis
         YAxis yAxis = mChart.getAxisLeft();
         yAxis.setDrawGridLines(false);
         yAxis.setDrawAxisLine(false);
-        yAxis.setTextColor(R.color.textColor);
 
         mChart.setDrawGridBackground(false);
 
@@ -185,9 +204,11 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
 
         BarDataSet barDataSet2 = new BarDataSet(valueSet1, "");
         barDataSet2.setColor(Color.rgb(31, 44, 76));
+        barDataSet2.setDrawValues(false);
 
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet2);
+
         return dataSets;
     }
 
@@ -206,7 +227,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -259,22 +280,79 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
             mCurrLocationMarker.remove();
         }
 
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+        //get current address from latlng
+        mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        mCurrentAddress = getAddressFromLatLng(getActivity(), location.getLatitude(), location.getLongitude());
 
-        //move map camera
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        //Mark pickup and drop on map
+        markPickUpandDropOnMap(mCurrentLatLng, mCurrentAddress);
 
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, DashboardFragment.this);
+        }
+    }
+
+    private String getAddressFromLatLng(Context context, double latitude, double longitude) {
+        String strAdd = null;
+        try {
+            Geocoder geocoder;
+            List<Address> addresses;
+            strAdd = "";
+            geocoder = new Geocoder(context, Locale.getDefault());
+
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                String address = addresses.get(0).getAddressLine(0);
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryName();
+                String postalCode = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName();
+                strAdd = address + " " + city;
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return strAdd;
+    }
+
+    public void markPickUpandDropOnMap(LatLng point, String address) {
+        // Already two locations
+        MarkerPoints.clear();
+        mMap.clear();
+
+        // Adding new item to the ArrayList
+        MarkerPoints.add(point);
+
+        // Creating MarkerOptions
+        MarkerOptions options = new MarkerOptions();
+
+        // Setting the position of the marker
+        options.position(point);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+
+        DrawRouteMaps.getInstance(getActivity())
+                .draw(point, mCurrentLatLng, mMap);
+
+
+        if (MarkerPoints.size() == 1) {
+            DrawMarker.getInstance(getActivity()).draw(mMap, point, R.drawable.marker_a, "" + address);
+            LatLngBounds bounds = new LatLngBounds.Builder()
+                    .include(point)
+                    .include(mCurrentLatLng).build();
+            Point displaySize = new Point();
+            getActivity().getWindowManager().getDefaultDisplay().getSize(displaySize);
+            //move map camera
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+            //options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(address);
         }
     }
 

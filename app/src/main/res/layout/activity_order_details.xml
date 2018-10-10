@@ -82,7 +82,7 @@
                             android:layout_below="@+id/txtInvoiceId"
                             android:layout_marginRight="@dimen/height_5"
                             android:layout_toLeftOf="@+id/txtCompleted"
-                            android:background="@drawable/ic_arrow_right_yellow" />
+                            android:background="@drawable/checked" />
 
                         <TextView
                             android:id="@+id/txtCompleted"
@@ -93,7 +93,7 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:text="Completed"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/main_green_color"
+                            android:textColor="@color/color_green"
                             android:textStyle="bold" />
 
 
@@ -236,17 +236,18 @@
                             android:id="@+id/img_email"
                             android:layout_width="@dimen/height_20"
                             android:layout_height="@dimen/height_20"
-                            android:layout_marginRight="@dimen/height_5"
+                            android:layout_marginRight="@dimen/height_20"
                             android:layout_toLeftOf="@+id/img_call"
-                            android:background="@drawable/ic_arrow_right_yellow" />
+                            android:background="@drawable/message" />
 
                         <ImageView
                             android:id="@+id/img_call"
                             android:layout_width="@dimen/height_20"
                             android:layout_height="@dimen/height_20"
+                            android:layout_marginRight="@dimen/height_10"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:background="@drawable/ic_arrow_right_yellow" />
+                            android:background="@drawable/phone" />
 
                     </RelativeLayout>
 

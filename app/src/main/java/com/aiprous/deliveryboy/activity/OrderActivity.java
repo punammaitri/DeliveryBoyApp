@@ -54,14 +54,16 @@ public class OrderActivity extends AppCompatActivity {
         }
 
         //add static data into array list
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.bottle, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
