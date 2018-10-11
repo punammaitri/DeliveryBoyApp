@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,9 @@ import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.deliveryboy.MainActivity;
 import com.aiprous.deliveryboy.R;
+import com.aiprous.deliveryboy.activity.OrderActivity;
 import com.aiprous.deliveryboy.activity.OrderDetails;
+import com.aiprous.deliveryboy.adapter.OrderAdapter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.XAxis;
@@ -69,9 +73,14 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     private String mCurrentAddress;
     ArrayList<LatLng> MarkerPoints;
 
+    @BindView(R.id.order_recycler_view)
+    RecyclerView order_recycler_view;
+
     @BindView(R.id.chart)
     BarChart mChart;
 
+    ArrayList<DashboardFragment.ListModel> mlistModelsArray = new ArrayList<>();
+    private RecyclerView.LayoutManager layoutManager;
     private MainActivity mainActivity;
 
     private OnFragmentInteractionListener mListener;
@@ -112,6 +121,15 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     private void init() {
 
         MarkerPoints = new ArrayList<>();
+        //add static data into array list
+        mlistModelsArray.add(new DashboardFragment.ListModel(R.drawable.pending, "Pending Orders (20)"));
+        mlistModelsArray.add(new DashboardFragment.ListModel(R.drawable.processing, "Processing Orders (20)"));
+        mlistModelsArray.add(new DashboardFragment.ListModel(R.drawable.checked, "Completed Orders (20)"));
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        order_recycler_view.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        order_recycler_view.setHasFixedSize(true);
+        order_recycler_view.setAdapter(new DashboardAdapter(getActivity(), mlistModelsArray));
 
         BarData data = new BarData(getXAxisValues(), getDataSet());
         mChart.setData(data);
@@ -148,13 +166,13 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     }
 
 
-    public class SubListModel {
+    public class ListModel {
         int image;
-        String product_name;
+        String title;
 
-        public SubListModel(int image, String product_name) {
+        public ListModel(int image, String title) {
             this.image = image;
-            this.product_name = product_name;
+            this.title = title;
         }
 
         public int getImage() {
@@ -165,12 +183,12 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
             this.image = image;
         }
 
-        public String getProduct_name() {
-            return product_name;
+        public String getTitle() {
+            return title;
         }
 
-        public void setProduct_name(String product_name) {
-            this.product_name = product_name;
+        public void setTitle(String title) {
+            this.title = title;
         }
     }
 

@@ -54,16 +54,15 @@ public class OrderActivity extends AppCompatActivity {
         }
 
         //add static data into array list
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
-        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Bottle of 60 tablet", "150", "30%", "135"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Pending"));
+        mlistModelsArray.add(new ListModel(R.drawable.processing, "Order #12121212", "Processing"));
+        mlistModelsArray.add(new ListModel(R.drawable.checked, "Order #12121212", "Completed"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Pending"));
+        mlistModelsArray.add(new ListModel(R.drawable.processing, "Order #12121212", "Processing"));
+        mlistModelsArray.add(new ListModel(R.drawable.checked, "Order #12121212", "Completed"));
+        mlistModelsArray.add(new ListModel(R.drawable.pending, "Order #12121212", "Pending"));
+        mlistModelsArray.add(new ListModel(R.drawable.processing, "Order #12121212", "Processing"));
+        mlistModelsArray.add(new ListModel(R.drawable.checked, "Order #12121212", "Completed"));
 
         layoutManager = new LinearLayoutManager(mContext);
         rc_medicine_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -78,19 +77,13 @@ public class OrderActivity extends AppCompatActivity {
 
     public class ListModel {
         int image;
-        String medicineName;
+        String orderId;
         String value;
-        String mrp;
-        String discount;
-        String price;
 
-        public ListModel(int image, String medicineName, String value, String mrp, String discount, String price) {
+        public ListModel(int image, String orderId, String value) {
             this.image = image;
-            this.medicineName = medicineName;
+            this.orderId = orderId;
             this.value = value;
-            this.mrp = mrp;
-            this.discount = discount;
-            this.price = price;
         }
 
         public int getImage() {
@@ -101,12 +94,12 @@ public class OrderActivity extends AppCompatActivity {
             this.image = image;
         }
 
-        public String getMedicineName() {
-            return medicineName;
+        public String getOrderId() {
+            return orderId;
         }
 
-        public void setMedicineName(String medicineName) {
-            this.medicineName = medicineName;
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
         }
 
         public String getValue() {
@@ -115,30 +108,6 @@ public class OrderActivity extends AppCompatActivity {
 
         public void setValue(String value) {
             this.value = value;
-        }
-
-        public String getMrp() {
-            return mrp;
-        }
-
-        public void setMrp(String mrp) {
-            this.mrp = mrp;
-        }
-
-        public String getDiscount() {
-            return discount;
-        }
-
-        public void setDiscount(String discount) {
-            this.discount = discount;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
         }
     }
 }

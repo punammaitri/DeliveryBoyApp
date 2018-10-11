@@ -1,17 +1,17 @@
-<android.support.design.widget.CoordinatorLayout android:id="@+id/coordinatorLayout"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
             android:id="@+id/appbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -24,21 +24,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/height_30">
 
                     <ImageView
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/applogo"
-                        android:layout_centerInParent="true" />
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/applogo" />
 
 
                     <RelativeLayout
                         android:id="@+id/rlayout_cart"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="@dimen/height_20">
+                        android:layout_alignParentEnd="true">
 
                         <TextView
                             android:layout_width="20dp"
@@ -69,8 +69,8 @@
         <FrameLayout
             android:id="@+id/layout_container"
             android:layout_width="match_parent"
-            android:layout_below="@+id/appbar"
             android:layout_height="match_parent"
+            android:layout_below="@+id/appbar"
             android:layout_gravity="center" />
 
     </RelativeLayout>

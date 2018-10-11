@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,8 +42,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        //holder.img_medicine.setImageResource(mDataArrayList.get(position).getImage());
-        holder.txtOrderId.setText(mDataArrayList.get(position).getMedicineName());
+        holder.img_view.setImageResource(mDataArrayList.get(position).getImage());
+        holder.txt_order_id.setText(mDataArrayList.get(position).getOrderId());
+        holder.txtProcessing.setText(mDataArrayList.get(position).getValue());
+
+        if (holder.txtProcessing.getText().equals("Pending")) {
+            holder.txtProcessing.setTextColor(mContext.getResources().getColor(R.color.color_orange));
+        } else if (holder.txtProcessing.getText().equals("Processing")) {
+            holder.txtProcessing.setTextColor(mContext.getResources().getColor(R.color.color_sky_blue));
+        } else if (holder.txtProcessing.getText().equals("Completed")) {
+            holder.txtProcessing.setTextColor(mContext.getResources().getColor(R.color.color_green));
+        }
 
         holder.llayout_listing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +60,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 mContext.startActivity(new Intent(mContext, OrderDetails.class));
             }
         });
+
+
     }
 
     @Override
@@ -58,8 +70,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.img_view)
+        ImageView img_view;
         @BindView(R.id.txt_order_id)
-        TextView txtOrderId;
+        TextView txt_order_id;
+        @BindView(R.id.txtProcessing)
+        TextView txtProcessing;
         @BindView(R.id.llayout_listing)
         LinearLayout llayout_listing;
 

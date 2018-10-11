@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/relPendingOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/height_6"
+        android:paddingBottom="@dimen/height_6">
+
+        <ImageView
+            android:id="@+id/img_pending_order"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/height_20"
+            android:layout_marginTop="@dimen/height_15" />
+
+        <TextView
+            android:id="@+id/txtOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/height_10"
+            android:layout_marginTop="@dimen/height_6"
+            android:layout_marginBottom="@dimen/height_8"
+            android:layout_toEndOf="@+id/img_pending_order"
+            android:layout_toRightOf="@+id/img_pending_order"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Pending Orders (20)"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/height_15"
+            android:layout_marginRight="@dimen/height_20"
+            android:background="@drawable/ic_arrow_right_black" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@android:color/black" />
+</LinearLayout>

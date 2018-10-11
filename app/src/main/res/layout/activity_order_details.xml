@@ -103,7 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
                         android:layout_marginTop="@dimen/height_6"
-                        android:background="@android:color/black" />
+                        android:background="@color/colorlightGray" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -300,7 +300,6 @@
                                 android:gravity="end"
                                 android:maxLines="2"
                                 android:text="@string/rs_symbol_total"
-                                android:textColor="@color/colorblack"
                                 android:textSize="15sp" />
 
                         </LinearLayout>
@@ -329,7 +328,6 @@
                                 android:gravity="end"
                                 android:maxLines="2"
                                 android:text="@string/rs_symbol_total"
-                                android:textColor="@color/colorblack"
                                 android:textSize="15sp" />
 
                         </LinearLayout>
@@ -359,7 +357,6 @@
                                 android:gravity="end"
                                 android:maxLines="2"
                                 android:text="@string/rs_symbol_total"
-                                android:textColor="@color/colorblack"
                                 android:textSize="15sp" />
 
                         </LinearLayout>

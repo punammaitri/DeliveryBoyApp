@@ -19,5 +19,4 @@ public interface LoginActivityService {
                                       @Field("device_token") String device_token);
 
 
-
 }
