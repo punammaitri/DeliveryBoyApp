@@ -10,8 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,15 +39,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderDetails extends AppCompatActivity  {
+public class OrderDetails extends AppCompatActivity {
 
     @BindView(R.id.txtTitle)
     TextView txtTitle;
     @BindView(R.id.rec_sellerInvoice)
     RecyclerView rec_sellerInvoice;
+    @BindView(R.id.txtCompleted)
+    TextView txtCompleted;
+    @BindView(R.id.btnDelivered)
+    Button btnDelivered;
+    @BindView(R.id.imgview)
+    ImageView imgview;
+
 
     ArrayList<OrderDetails.ListModel> mlistModelsArray = new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
+    private String getOrderStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,30 @@ public class OrderDetails extends AppCompatActivity  {
     private void init() {
 
         txtTitle.setText("Order Details");
+
+
+        if (getIntent() != null && getIntent().hasExtra("getOrderStatus")) {
+            getOrderStatus = getIntent().getStringExtra("getOrderStatus");
+            if (getOrderStatus.equals("Pending")) {
+                txtCompleted.setText("Pending");
+                txtCompleted.setTextColor(getResources().getColor(R.color.color_orange));
+                imgview.setImageResource(R.drawable.pending);
+                btnDelivered.setVisibility(View.VISIBLE);
+
+            } else if (getOrderStatus.equals("Processing")) {
+                txtCompleted.setText("Processing");
+                txtCompleted.setTextColor(getResources().getColor(R.color.color_sky_blue));
+                imgview.setImageResource(R.drawable.processing);
+                btnDelivered.setVisibility(View.VISIBLE);
+            } else if (getOrderStatus.equals("Completed")) {
+                txtCompleted.setText("Completed");
+                txtCompleted.setTextColor(getResources().getColor(R.color.color_green));
+                imgview.setImageResource(R.drawable.checked);
+                btnDelivered.setVisibility(View.GONE);
+            }
+        }
+
+
         //set status bar color
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

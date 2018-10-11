@@ -27,7 +27,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_8"
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
@@ -35,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="First name"
+                    android:imeOptions="actionNext"
                     android:inputType="text"
                     android:text="Prakash Pawar"
                     android:textColor="@android:color/black" />
@@ -44,7 +45,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_8"
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
@@ -52,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Last name"
+                    android:imeOptions="actionNext"
                     android:textColor="@android:color/black"
                     android:inputType="text" />
 
@@ -60,7 +62,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_8"
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
@@ -68,6 +70,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Mobile number"
+                    android:imeOptions="actionNext"
                     android:textColor="@android:color/black"
                     android:inputType="number" />
 
@@ -76,7 +79,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_8"
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
@@ -84,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Email ID"
+                    android:imeOptions="actionNext"
                     android:textColor="@android:color/black"
                     android:inputType="textEmailAddress" />
 
@@ -93,7 +97,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_8"
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
@@ -101,6 +105,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Gender"
+                    android:imeOptions="actionNext"
                     android:textColor="@android:color/black"
                     android:inputType="text" />
 
@@ -110,7 +115,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginTop="@dimen/height_8"
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
@@ -118,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:hint="Vehicle"
+                    android:imeOptions="actionDone"
                     android:textColor="@android:color/black"
                     android:inputType="text" />
 
@@ -128,7 +134,7 @@
     <Button
         android:id="@+id/btn_save_up"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/height_40"

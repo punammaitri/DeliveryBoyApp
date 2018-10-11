@@ -57,7 +57,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.llayout_listing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, OrderDetails.class));
+                mContext.startActivity(new Intent(mContext, OrderDetails.class)
+                        .putExtra("getOrderStatus", "" + holder.txtProcessing.getText()));
             }
         });
 
