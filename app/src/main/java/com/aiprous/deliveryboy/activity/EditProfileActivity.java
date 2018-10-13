@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.aiprous.deliveryboy.R;
+import com.aiprous.deliveryboy.apimodel.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,14 +32,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private void init() {
         txtTitle.setText("Edit Profile");
 
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
     }
 
     @OnClick(R.id.rlayout_back_button)

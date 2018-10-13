@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.adapter.OrderTrackingAdapter;
+import com.aiprous.deliveryboy.apimodel.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -77,13 +78,9 @@ public class OrderTrackingActivity extends FragmentActivity implements OnMapRead
     private void init() {
 
         searchview_medicine.setFocusable(false);
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        }
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
         rc_medicine_list = findViewById(R.id.rc_medicine_list);
 

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.adapter.OrderDetailsAdapter;
+import com.aiprous.deliveryboy.apimodel.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -67,8 +68,11 @@ public class OrderDetails extends AppCompatActivity {
 
     private void init() {
 
-        txtTitle.setText("Order Details");
+        //Change status bar color
+        BaseActivity baseActivity = new BaseActivity();
+        baseActivity.changeStatusBarColor(this);
 
+        txtTitle.setText("Order Details");
 
         if (getIntent() != null && getIntent().hasExtra("getOrderStatus")) {
             getOrderStatus = getIntent().getStringExtra("getOrderStatus");
@@ -89,15 +93,6 @@ public class OrderDetails extends AppCompatActivity {
                 imgview.setImageResource(R.drawable.checked);
                 btnDelivered.setVisibility(View.GONE);
             }
-        }
-
-
-        //set status bar color
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
         //add static data into List array list
