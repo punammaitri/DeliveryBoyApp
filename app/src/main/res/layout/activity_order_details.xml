@@ -72,6 +72,7 @@
                             android:layout_below="@+id/txtInvoiceId"
                             android:fontFamily="@font/open_sans_regular"
                             android:text="@string/rs_symbol_amount"
+                            android:layout_marginTop="@dimen/height_3"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@android:color/black"
                             android:textStyle="bold" />
@@ -80,6 +81,7 @@
                             android:id="@+id/imgview"
                             android:layout_width="@dimen/height_20"
                             android:layout_height="@dimen/height_20"
+                            android:layout_marginTop="@dimen/height_3"
                             android:layout_below="@+id/txtInvoiceId"
                             android:layout_marginRight="@dimen/height_5"
                             android:layout_toLeftOf="@+id/txtCompleted" />
@@ -93,6 +95,7 @@
                             android:fontFamily="@font/open_sans_regular"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/color_green"
+                            android:layout_marginTop="@dimen/height_3"
                             android:textStyle="bold" />
 
 
@@ -165,6 +168,12 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_marginTop="@dimen/height_6"
+                        android:background="@color/colorlightGray" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -209,6 +218,11 @@
 
                     </LinearLayout>
 
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="@color/colorfaintblack"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -9,7 +9,7 @@
     <string name="txt_orders">Orders</string>
     <string name="txt_profile">Profile</string>
     <string name="txt_logout">Logout</string>
-    <string name="rs_symbol_amount">Amount \u20B9350.00 (2 items)</string>
+    <string name="rs_symbol_amount">Amount: \u20B9350.00 (2 items)</string>
     <string name="rs_symbol_seller">\u20B9278.00</string>
     <string name="rs_symbol_total">\u20B9108.00</string>
     <string name="rs_symbol_thirty">\u20B9350.00</string>

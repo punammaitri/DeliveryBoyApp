@@ -18,7 +18,7 @@
     //temp color
     <color name="textColor">#4E4E4E</color>
 
-
+    <color name="colorfaintblack">#924a3f3a</color>
     //color code for pharmacist
     <color name="color_sky_blue">#00aeef</color>
     <color name="color_red">#ed1c24</color>
