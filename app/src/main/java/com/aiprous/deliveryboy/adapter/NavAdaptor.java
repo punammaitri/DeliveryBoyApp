@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.model.NavItemClicked;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,13 +52,17 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
         holder.tvForMenuItem.setText(mNavTitles[holder.getAdapterPosition()]);
         holder.ivForMenuItem.setImageResource(mIcons[position]);
 
+        if (position == 3) {
+            holder.viewForDivider.setVisibility(View.GONE);
+        }
+
         holder.llForNavItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navItemClicked.navItemClicked(mNavTitles[holder.getAdapterPosition()], holder.getAdapterPosition());
             }
         });
-//
+
         holder.ivForMenuItem.setBackgroundColor(Color.TRANSPARENT);
     }
 
@@ -83,8 +85,8 @@ public class NavAdaptor extends RecyclerView.Adapter<NavAdaptor.ViewHolder> {
         LinearLayout llForNavItem;
         @BindView(R.id.tv_arrow)
         TextView tv_arrow;
-        // @BindView(R.id.viewForDivider)
-        //  View viewForDivider;
+        @BindView(R.id.viewForDivider)
+        View viewForDivider;
         //  @BindView(R.id.cart_badge)
         // TextView cartBadge;
         // @BindView(R.id.cardViewMain)
