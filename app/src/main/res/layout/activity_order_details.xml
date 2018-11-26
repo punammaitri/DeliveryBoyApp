@@ -96,6 +96,7 @@
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/color_green"
                             android:layout_marginTop="@dimen/height_3"
+                            android:layout_marginRight="@dimen/height_5"
                             android:textStyle="bold" />
 
 
