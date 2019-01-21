@@ -1,16 +1,11 @@
 package com.aiprous.deliveryboy.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.aiprous.deliveryboy.R;
-import com.aiprous.deliveryboy.apimodel.BaseActivity;
+import com.aiprous.deliveryboy.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,19 +1,15 @@
 package com.aiprous.deliveryboy.activity;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.adapter.OrderAdapter;
-import com.aiprous.deliveryboy.apimodel.BaseActivity;
+import com.aiprous.deliveryboy.utils.BaseActivity;
 
 import java.util.ArrayList;
 

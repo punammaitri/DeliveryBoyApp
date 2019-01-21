@@ -2,24 +2,21 @@ package com.aiprous.deliveryboy.activity;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.adapter.OrderTrackingAdapter;
-import com.aiprous.deliveryboy.apimodel.BaseActivity;
+import com.aiprous.deliveryboy.utils.BaseActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;

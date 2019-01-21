@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aiprous.deliveryboy.R;
-import com.aiprous.deliveryboy.apimodel.BaseActivity;
+import com.aiprous.deliveryboy.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

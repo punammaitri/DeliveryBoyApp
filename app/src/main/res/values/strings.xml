@@ -14,10 +14,12 @@
     <string name="rs_symbol_total">\u20B9108.00</string>
     <string name="rs_symbol_thirty">\u20B9350.00</string>
 
-    <string name="are_you_sure">Are you sure</string>
+    <string name="are_you_sure">Are you sure?</string>
     <string name="are_you_exit">You want to exit?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="ok">OK</string>
+
     <string name="are_you_sure_logout">You want to logout?</string>
     <string name="loading">Loading…</string>
     <string name="err_server">Something wrong at server, please try again later.</string>
@@ -26,8 +28,13 @@
     <string name="error_netconnection">Please check your internet connection!!!</string>
     <string name="location_service">Location Service is OFF</string>
     <string name="location_service_message">Can\'t determine your location.\nYour current location not determine</string>
-
-
+    <string name="location_permission">App was not allowed to access Location. Consider granting it Location permission.</string>
+    <string name="error_email">Please enter email or mobile number</string>
+    <string name="error_pass">Please provide password.</string>
     <string name="sub_id"><u>1732938344</u></string>
     <string name="facebook_app_id">250490452280914</string>
+
+    <string name="check_your_network">Please check your network connection.</string>
+
+
 </resources>

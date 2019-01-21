@@ -3,6 +3,7 @@ package com.aiprous.deliveryboy.application;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
@@ -25,19 +26,30 @@ public class DeliveryBoyApp extends MultiDexApplication {
         return mContext;
     }
 
-    public static void onSaveLoginDetail(String driver_id, String firstname, String lastname,  String mobile_number) {
+    public static void onSaveLoginDetail(String id, String authToken, String firstname, String lastname,
+                                         String mobile_number, String email, String storeId) {
 
         SharedPreferences.Editor edt = mSharedPreferences.edit();
-
-        edt.putString("DRIVERID", driver_id);
+        edt.putString("ID", id);
+        edt.putString("AUTHTOKEN", authToken);
         edt.putString("FIRSTNAME", firstname);
         edt.putString("LASTNAME", lastname);
         edt.putString("MOBILENO", mobile_number);
+        edt.putString("EMAIL", email);
+        edt.putString("STOREID", storeId);
         edt.commit();
     }
 
-    public static String onGetDriverId() {
-        return mSharedPreferences.getString("DRIVERID", "");
+    public static String onGetId() {
+        return mSharedPreferences.getString("ID", "");
+    }
+
+    public static String onGetStoreId() {
+        return mSharedPreferences.getString("STOREID", "");
+    }
+
+    public static String onGetAuthToken() {
+        return mSharedPreferences.getString("AUTHTOKEN", "");
     }
 
     public static String onGetFirstName() {
@@ -52,6 +64,9 @@ public class DeliveryBoyApp extends MultiDexApplication {
         return mSharedPreferences.getString("MOBILENO", "");
     }
 
+    public static String onGetEmail() {
+        return mSharedPreferences.getString("EMAIL", "");
+    }
 
     public static void onSetDriverStatus(String  driverstatusflag) {
 
@@ -73,6 +88,18 @@ public class DeliveryBoyApp extends MultiDexApplication {
     }
     public static String onGetAutoStart() {
         return mSharedPreferences.getString("autoStart", "");
+    }
+
+
+    public static void onSaveLatiLong(String latlong) {
+        SharedPreferences.Editor lEditor = mSharedPreferences.edit();
+        lEditor.putString("LATILONG", latlong);
+        lEditor.commit();
+    }
+
+    @Nullable
+    public static String getLatiLong() {
+        return mSharedPreferences.getString("LATILONG", "");
     }
 
 }

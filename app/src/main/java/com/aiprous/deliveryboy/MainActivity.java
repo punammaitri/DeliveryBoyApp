@@ -9,38 +9,37 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.aiprous.deliveryboy.activity.EditProfileActivity;
 import com.aiprous.deliveryboy.activity.LoginActivity;
 import com.aiprous.deliveryboy.activity.OrderActivity;
 import com.aiprous.deliveryboy.activity.ProfileActivity;
 import com.aiprous.deliveryboy.adapter.NavAdaptor;
+import com.aiprous.deliveryboy.application.DeliveryBoyApp;
 import com.aiprous.deliveryboy.fragment.DashboardFragment;
 import com.aiprous.deliveryboy.model.NavItemClicked;
-
+import com.cazaea.sweetalert.SweetAlertDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class MainActivity extends AppCompatActivity implements NavItemClicked {
@@ -218,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
                 .setContentText(mContext.getResources().getString(R.string.are_you_exit))
                 .setConfirmText(mContext.getResources().getString(R.string.yes))
                 .setCancelText(mContext.getResources().getString(R.string.no))
+                .showCancelButton(true)
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
@@ -225,15 +225,13 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
                         finish();
                     }
                 })
-                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
                     }
                 })
                 .show();
-
-
     }
 
     private void logout() {
@@ -242,22 +240,26 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
                 .setContentText(mContext.getResources().getString(R.string.are_you_sure_logout))
                 .setConfirmText(mContext.getResources().getString(R.string.yes))
                 .setCancelText(mContext.getResources().getString(R.string.no))
+                .showCancelButton(true)
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
-                        startActivity(new Intent(mContext, LoginActivity.class));
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                        startActivity(intent);
+                        DeliveryBoyApp.onSaveLoginDetail("", "", "", "", "", "", "");
                         finish();
                     }
                 })
-                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
                     }
                 })
                 .show();
-
     }
 
     @Override

@@ -18,9 +18,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-
-import com.aiprous.deliveryboy.apimodel.AlertDialogs;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -29,7 +26,6 @@ import java.util.TimerTask;
 
 public class GoogleSevice extends Service implements LocationListener {
 
-    AlertDialogs mAlert;
     Context mContext = this;
     boolean isGPSEnable = false;
     boolean isNetworkEnable = false;
@@ -57,7 +53,6 @@ public class GoogleSevice extends Service implements LocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        mAlert = AlertDialogs.getInstance();
         mTimer = new Timer();
         mTimer.schedule(new TimerTaskToGetLocation(), 5, notify_interval);
         // intent = new Intent(str_receiver);

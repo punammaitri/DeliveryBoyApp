@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,14 @@ import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.deliveryboy.MainActivity;
 import com.aiprous.deliveryboy.R;
-import com.aiprous.deliveryboy.activity.OrderActivity;
-import com.aiprous.deliveryboy.activity.OrderDetails;
-import com.aiprous.deliveryboy.adapter.OrderAdapter;
+import com.aiprous.deliveryboy.activity.OrderTrackingActivity;
+import com.aiprous.deliveryboy.utils.APIConstant;
+import com.aiprous.deliveryboy.utils.CustomProgressDialog;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -49,14 +53,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.aiprous.deliveryboy.utils.APIConstant.DELIVERYBOY_TRACKING;
+import static com.aiprous.deliveryboy.utils.BaseActivity.isNetworkAvailable;
 
 public class DashboardFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -84,6 +97,28 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     private MainActivity mainActivity;
 
     private OnFragmentInteractionListener mListener;
+    private String mDeliveryBoyLat  = "";
+    private String mDeliveryBoyLong = "";
+    private Double deliveryBoyLat;
+    private LatLng mDeliveryBoyLatLng;
+    private Double deliveryBoyLong;
+    private String mDeliveryBoyAddress;
+    HashMap<String, String> map;
+    ArrayList<HashMap<String, String>> location = new ArrayList<HashMap<String, String>>();
+    private String mWarehouseLong  ="";
+    private String mWarehouseLat = "";
+    private Double warehouseLat;
+    private Double warehouseLong;
+    private LatLng mWarehouseLatLng;
+    private String mWarehouseAddress;
+    private String mShippingLat  = "";
+    private String mShippingLong = "";
+    private Double shippingLong;
+    private Double shippingLat;
+    private LatLng mShippingLatLng;
+    private String mShippingAddress;
+    private Double Latitude = 0.00;
+    private Double Longitude = 0.00;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -282,12 +317,10 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, DashboardFragment.this);
         }
-
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -298,12 +331,12 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
             mCurrLocationMarker.remove();
         }
 
-        //get current address from latlng
+    /*    //get current address from latlng
         mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
         mCurrentAddress = getAddressFromLatLng(getActivity(), location.getLatitude(), location.getLongitude());
 
         //Mark pickup and drop on map
-        markPickUpandDropOnMap(mCurrentLatLng, mCurrentAddress);
+        markPickUpandDropOnMap(mCurrentLatLng, mCurrentAddress);*/
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -337,7 +370,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
         return strAdd;
     }
 
-    public void markPickUpandDropOnMap(LatLng point, String address) {
+   /* public void markPickUpandDropOnMap(LatLng point, String address) {
         // Already two locations
         MarkerPoints.clear();
         mMap.clear();
@@ -372,7 +405,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
 
             //options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(address);
         }
-    }
+    }*/
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -438,5 +471,135 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
             // other 'case' lines to check for other permissions this app might request.
             // You can add here other case statements according to your requirement.
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!isNetworkAvailable(getActivity())) {
+            CustomProgressDialog.getInstance().showDialog(getActivity(), getActivity().getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
+        } else {
+            CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
+            TrackDeliveryBoyLocation("19", "5", "26.767633", "75.831374");
+        }
+    }
+
+    private void TrackDeliveryBoyLocation(String orderId, String DboyId, String mLat, String mLong) {
+        AndroidNetworking.get(DELIVERYBOY_TRACKING + orderId + "&dboy_id=" + DboyId + "&lat=" + mLat + "&long=" + mLong)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        // do anything with response
+                        JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
+                        JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
+                        String status = getAllResponse.get("status").getAsString();
+
+                        if (status.equals("success")) {
+
+                            location.clear();
+                            //for delivery boy latlong
+                            JsonObject resDeliveryBoy = responseObject.get("delivery_boy").getAsJsonObject();
+                            if (resDeliveryBoy != null) {
+                                mDeliveryBoyLat = resDeliveryBoy.get("lat").getAsString();
+                                mDeliveryBoyLong = resDeliveryBoy.get("long").getAsString();
+
+                                //for warehouse latlong
+                                if (!mDeliveryBoyLat.equals("") && !mDeliveryBoyLong.equals("")) {
+                                    deliveryBoyLat = Double.valueOf(mDeliveryBoyLat);
+                                    deliveryBoyLong = Double.valueOf(mDeliveryBoyLong);
+                                    //for warehouse
+                                    mDeliveryBoyLatLng = new LatLng(deliveryBoyLat, deliveryBoyLong);
+                                    mDeliveryBoyAddress = getAddressFromLatLng(getActivity(), deliveryBoyLat, deliveryBoyLong);
+
+                                    //add location to arrayList for warehouse
+                                    map = new HashMap<String, String>();
+                                    map.put("Latitude", mDeliveryBoyLat);
+                                    map.put("Longitude", mDeliveryBoyLong);
+                                    map.put("LocationName", mDeliveryBoyAddress);
+                                    location.add(map);
+                                }
+                            }
+
+                            //for warehouse boy latlong
+                            JsonObject resWarehouse = responseObject.get("warehouse").getAsJsonObject();
+                            if (resDeliveryBoy != null) {
+                                mWarehouseLat = resWarehouse.get("lat").getAsString();
+                                mWarehouseLong = resWarehouse.get("long").getAsString();
+
+                                //for warehouse latlong
+                                if (!mWarehouseLat.equals("") && !mWarehouseLong.equals("")) {
+                                    warehouseLat = Double.valueOf(mWarehouseLat);
+                                    warehouseLong = Double.valueOf(mWarehouseLong);
+                                    //for warehouse
+                                    mWarehouseLatLng = new LatLng(warehouseLat, warehouseLong);
+                                    mWarehouseAddress = getAddressFromLatLng(getActivity(), warehouseLat, warehouseLong);
+
+                                    //add location to arrayList for warehouse
+                                    map = new HashMap<String, String>();
+                                    map.put("Latitude", mWarehouseLat);
+                                    map.put("Longitude", mWarehouseLong);
+                                    map.put("LocationName", mWarehouseAddress);
+                                    location.add(map);
+                                }
+                            }
+                            //for warehouse boy latlong
+                            JsonObject resShipping = responseObject.get("shipping").getAsJsonObject();
+                            if (resDeliveryBoy != null) {
+                                mShippingLat = resShipping.get("lat").getAsString();
+                                mShippingLong = resShipping.get("long").getAsString();
+
+                                //for warehouse latlong
+                                if (!mShippingLat.equals("") && !mShippingLong.equals("")) {
+                                    shippingLat = Double.valueOf(mShippingLat);
+                                    shippingLong = Double.valueOf(mShippingLong);
+                                    //for warehouse
+                                    mShippingLatLng = new LatLng(shippingLat, shippingLong);
+                                    mShippingAddress = getAddressFromLatLng(getActivity(), shippingLat, shippingLong);
+
+                                    //add location to arrayList for warehouse
+                                    map = new HashMap<String, String>();
+                                    map.put("Latitude", mShippingLat);
+                                    map.put("Longitude", mShippingLong);
+                                    map.put("LocationName", mShippingAddress);
+                                    location.add(map);
+                                }
+                            }
+
+                               //for adding marker on map
+                            for (int i = 0; i < location.size(); i++) {
+                                Latitude = Double.parseDouble(location.get(i).get("Latitude").toString());
+                                Longitude = Double.parseDouble(location.get(i).get("Longitude").toString());
+                                String name = location.get(i).get("LocationName").toString();
+                                MarkerOptions marker = new MarkerOptions().position(new LatLng(Latitude, Longitude)).title(name);
+                                //marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
+                                if (i == 0) {
+                                    marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                    mMap.addMarker(marker);
+                                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude,Longitude), 11));
+                                } else if (i == 1) {
+                                    marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                                    mMap.addMarker(marker);
+                                } else if (i == 2) {
+                                    marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                    mMap.addMarker(marker);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        CustomProgressDialog.getInstance().dismissDialog();
+                        Toast.makeText(getActivity(), "Error loading data", Toast.LENGTH_SHORT).show();
+                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
+                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
+                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
+                    }
+                });
     }
 }

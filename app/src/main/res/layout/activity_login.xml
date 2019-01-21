@@ -20,23 +20,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/height_25"
-            android:layout_marginBottom="@dimen/height_25"
-            android:layout_marginRight="@dimen/height_50"
             android:layout_marginLeft="@dimen/height_50"
+            android:layout_marginTop="@dimen/height_25"
+            android:layout_marginRight="@dimen/height_50"
+            android:layout_marginBottom="@dimen/height_25"
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@drawable/applogo"
-            />
-
+            android:src="@drawable/applogo" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="@dimen/height_20"
-            android:layout_marginRight="@dimen/height_20">
+            android:layout_marginRight="@dimen/height_20"
+            android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -44,14 +42,13 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email / Mobile Number"
                     android:fontFamily="@font/open_sans_regular"
+                    android:hint="Email / Mobile Number"
                     android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-
-                    />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -61,12 +58,13 @@
                 app:hintTextAppearance="@style/TextLabel">
 
                 <EditText
+                    android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
                     android:fontFamily="@font/open_sans_regular"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -76,60 +74,58 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/height_10"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Forgot Password?"
-                android:gravity="right"/>
+                android:gravity="right"
+                android:text="Forgot Password?" />
 
             <Button
                 android:id="@+id/btn_signup"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_45"
-                android:layout_marginLeft="@dimen/height_30"
-                android:layout_marginRight="@dimen/height_30"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/height_30"
                 android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_30"
                 android:background="@drawable/custom_btn_bg"
+                android:fontFamily="@font/open_sans_regular"
                 android:text="Sign In"
                 android:textAllCaps="true"
-                android:fontFamily="@font/open_sans_regular"
-                android:textSize="@dimen/height_16"
-                android:textStyle="bold"
                 android:textColor="@android:color/white"
-                />
+                android:textSize="@dimen/height_16"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:layout_marginTop="@dimen/height_10"
                 android:layout_marginLeft="@dimen/height_50"
-                android:layout_marginRight="@dimen/height_50">
+                android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_50"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_weight="1.1"
                     android:layout_gravity="center"
-                    android:background="@color/colorGray"
-                    />
+                    android:layout_weight="1.1"
+                    android:background="@color/colorGray" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:text="OR"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="center"
+                    android:text="OR"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_weight="1.1"
                     android:layout_gravity="center"
-                    android:background="@color/colorGray"
-                    />
+                    android:layout_weight="1.1"
+                    android:background="@color/colorGray" />
             </LinearLayout>
 
             <!-- <Button
@@ -151,62 +147,62 @@
                 android:id="@+id/tv_sign_in_withotp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_45"
-                android:layout_marginLeft="@dimen/height_30"
-                android:layout_marginRight="@dimen/height_30"
-                android:fontFamily="@font/open_sans_regular"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/height_30"
                 android:layout_marginTop="@dimen/height_10"
+                android:layout_marginRight="@dimen/height_30"
                 android:background="@drawable/custom_btn_bg"
-                android:text="Sign In with OTP"
-                android:gravity="center"
-                android:textColor="@color/colorwhite"
                 android:clickable="true"
-                android:textStyle="bold"
-                android:textSize="@dimen/height_16"/>
+                android:fontFamily="@font/open_sans_regular"
+                android:gravity="center"
+                android:text="Sign In with OTP"
+                android:textColor="@color/colorwhite"
+                android:textSize="@dimen/height_16"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:layout_marginTop="@dimen/height_15"
                 android:layout_marginLeft="@dimen/height_50"
+                android:layout_marginTop="@dimen/height_15"
                 android:layout_marginRight="@dimen/height_50"
-                android:visibility="gone">
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="3">
 
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_weight="1.1"
                     android:layout_gravity="center"
-                    android:background="@color/colorGray"
-                    />
+                    android:layout_weight="1.1"
+                    android:background="@color/colorGray" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:text="OR"
                     android:fontFamily="@font/open_sans_regular"
                     android:gravity="center"
+                    android:text="OR"
                     android:textColor="@color/colorblack"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:layout_weight="1.1"
                     android:layout_gravity="center"
-                    android:background="@color/colorGray"
-                    />
+                    android:layout_weight="1.1"
+                    android:background="@color/colorGray" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:layout_marginTop="@dimen/height_20"
                 android:layout_marginBottom="@dimen/height_20"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:visibility="gone">
 
                 <TextView
@@ -214,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Don't have an account? "
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TextView
                     android:id="@+id/tv_sign_up_here"
@@ -222,9 +218,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_regular"
                     android:text="Sign Up here"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorPrimary"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
