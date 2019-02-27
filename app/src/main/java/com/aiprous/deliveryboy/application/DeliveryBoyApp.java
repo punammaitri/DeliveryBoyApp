@@ -26,17 +26,15 @@ public class DeliveryBoyApp extends MultiDexApplication {
         return mContext;
     }
 
-    public static void onSaveLoginDetail(String id, String authToken, String firstname, String lastname,
-                                         String mobile_number, String email, String storeId) {
+    public static void onSaveLoginDetail(String id, String authToken, String name,
+                                         String mobile_number, String email) {
 
         SharedPreferences.Editor edt = mSharedPreferences.edit();
         edt.putString("ID", id);
         edt.putString("AUTHTOKEN", authToken);
-        edt.putString("FIRSTNAME", firstname);
-        edt.putString("LASTNAME", lastname);
+        edt.putString("NAME", name);
         edt.putString("MOBILENO", mobile_number);
         edt.putString("EMAIL", email);
-        edt.putString("STOREID", storeId);
         edt.commit();
     }
 
@@ -44,20 +42,12 @@ public class DeliveryBoyApp extends MultiDexApplication {
         return mSharedPreferences.getString("ID", "");
     }
 
-    public static String onGetStoreId() {
-        return mSharedPreferences.getString("STOREID", "");
-    }
-
     public static String onGetAuthToken() {
         return mSharedPreferences.getString("AUTHTOKEN", "");
     }
 
-    public static String onGetFirstName() {
-        return mSharedPreferences.getString("FIRSTNAME", "");
-    }
-
-    public static String onGetLastName() {
-        return mSharedPreferences.getString("LASTNAME", "");
+    public static String onGetName() {
+        return mSharedPreferences.getString("NAME", "");
     }
 
     public static String onGetMobileNo() {
@@ -68,38 +58,21 @@ public class DeliveryBoyApp extends MultiDexApplication {
         return mSharedPreferences.getString("EMAIL", "");
     }
 
-    public static void onSetDriverStatus(String  driverstatusflag) {
 
-        SharedPreferences.Editor edt = mSharedPreferences.edit();
-
-        edt.putString("DRIVERSATUSFLAG", driverstatusflag);
-        edt.commit();
-    }
-    public static String onGetDriverStatusFlag() {
-        return mSharedPreferences.getString("DRIVERSATUSFLAG", "");
-    }
-
-    public static void onSaveAutoStart(String  autoStart) {
-
-        SharedPreferences.Editor edt = mSharedPreferences.edit();
-
-        edt.putString("autoStart", autoStart);
-        edt.commit();
-    }
-    public static String onGetAutoStart() {
-        return mSharedPreferences.getString("autoStart", "");
-    }
-
-
-    public static void onSaveLatiLong(String latlong) {
+    public static void onSaveLatiLong(String lattitude,String longitude) {
         SharedPreferences.Editor lEditor = mSharedPreferences.edit();
-        lEditor.putString("LATILONG", latlong);
+        lEditor.putString("LAT", lattitude);
+        lEditor.putString("LONG", longitude);
         lEditor.commit();
     }
 
     @Nullable
-    public static String getLatiLong() {
-        return mSharedPreferences.getString("LATILONG", "");
+    public static String getLattitude() {
+        return mSharedPreferences.getString("LAT", "");
+    }
+
+    public static String getLongitude() {
+        return mSharedPreferences.getString("LONG", "");
     }
 
 }

@@ -28,6 +28,7 @@ import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.aiprous.deliveryboy.MainActivity;
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.activity.OrderTrackingActivity;
+import com.aiprous.deliveryboy.application.DeliveryBoyApp;
 import com.aiprous.deliveryboy.utils.APIConstant;
 import com.aiprous.deliveryboy.utils.CustomProgressDialog;
 import com.androidnetworking.AndroidNetworking;
@@ -97,7 +98,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     private MainActivity mainActivity;
 
     private OnFragmentInteractionListener mListener;
-    private String mDeliveryBoyLat  = "";
+    private String mDeliveryBoyLat = "";
     private String mDeliveryBoyLong = "";
     private Double deliveryBoyLat;
     private LatLng mDeliveryBoyLatLng;
@@ -105,13 +106,13 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     private String mDeliveryBoyAddress;
     HashMap<String, String> map;
     ArrayList<HashMap<String, String>> location = new ArrayList<HashMap<String, String>>();
-    private String mWarehouseLong  ="";
+    private String mWarehouseLong = "";
     private String mWarehouseLat = "";
     private Double warehouseLat;
     private Double warehouseLong;
     private LatLng mWarehouseLatLng;
     private String mWarehouseAddress;
-    private String mShippingLat  = "";
+    private String mShippingLat = "";
     private String mShippingLong = "";
     private Double shippingLong;
     private Double shippingLat;
@@ -119,6 +120,8 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
     private String mShippingAddress;
     private Double Latitude = 0.00;
     private Double Longitude = 0.00;
+    private double mLongitude = 0.0;
+    private double mLattitude = 0.0;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -143,6 +146,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -331,12 +335,15 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
             mCurrLocationMarker.remove();
         }
 
-    /*    //get current address from latlng
+        //get current address from latlng
         mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        mCurrentAddress = getAddressFromLatLng(getActivity(), location.getLatitude(), location.getLongitude());
 
-        //Mark pickup and drop on map
-        markPickUpandDropOnMap(mCurrentLatLng, mCurrentAddress);*/
+        mLattitude = location.getLatitude();
+        mLongitude = location.getLongitude();
+
+        Log.e("mAddressLattitide", "" + location.getLatitude());
+        Log.e("mAddressLong", "" + location.getLongitude());
+
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -481,7 +488,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
             CustomProgressDialog.getInstance().showDialog(getActivity(), getActivity().getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
         } else {
             CustomProgressDialog.getInstance().showDialog(getActivity(), "", APIConstant.PROGRESS_TYPE);
-            TrackDeliveryBoyLocation("19", "5", "26.767633", "75.831374");
+            TrackDeliveryBoyLocation("19", DeliveryBoyApp.onGetId(), String.valueOf(mLattitude), String.valueOf(mLongitude));
         }
     }
 
@@ -495,11 +502,10 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
                         // do anything with response
                         // do anything with response
                         JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                        JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
                         String status = getAllResponse.get("status").getAsString();
 
                         if (status.equals("success")) {
-
+                            JsonObject responseObject = getAllResponse.get("data").getAsJsonObject();
                             location.clear();
                             //for delivery boy latlong
                             JsonObject resDeliveryBoy = responseObject.get("delivery_boy").getAsJsonObject();
@@ -569,7 +575,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
                                 }
                             }
 
-                               //for adding marker on map
+                            //for adding marker on map
                             for (int i = 0; i < location.size(); i++) {
                                 Latitude = Double.parseDouble(location.get(i).get("Latitude").toString());
                                 Longitude = Double.parseDouble(location.get(i).get("Longitude").toString());
@@ -579,7 +585,7 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
                                 if (i == 0) {
                                     marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                                     mMap.addMarker(marker);
-                                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude,Longitude), 11));
+                                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Latitude, Longitude), 11));
                                 } else if (i == 1) {
                                     marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
                                     mMap.addMarker(marker);
@@ -588,6 +594,9 @@ public class DashboardFragment extends Fragment implements OnMapReadyCallback,
                                     mMap.addMarker(marker);
                                 }
                             }
+                            CustomProgressDialog.getInstance().dismissDialog();
+                        } else {
+                            CustomProgressDialog.getInstance().dismissDialog();
                         }
                     }
 

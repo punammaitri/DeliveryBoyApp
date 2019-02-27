@@ -14,8 +14,12 @@ import android.widget.TextView;
 import com.aiprous.deliveryboy.R;
 import com.aiprous.deliveryboy.activity.OrderActivity;
 import com.aiprous.deliveryboy.activity.OrderDetails;
+import com.aiprous.deliveryboy.model.AllOrderModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,10 +27,10 @@ import butterknife.ButterKnife;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
-    private ArrayList<OrderActivity.ListModel> mDataArrayList;
+    private ArrayList<AllOrderModel.Data> mDataArrayList;
     private Context mContext;
 
-    public OrderAdapter(Context mContext, ArrayList<OrderActivity.ListModel> mDataArrayList) {
+    public OrderAdapter(Context mContext, ArrayList<AllOrderModel.Data> mDataArrayList) {
         this.mContext = mContext;
         this.mDataArrayList = mDataArrayList;
     }
@@ -42,16 +46,33 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        holder.img_view.setImageResource(mDataArrayList.get(position).getImage());
-        holder.txt_order_id.setText(mDataArrayList.get(position).getOrderId());
-        holder.txtProcessing.setText(mDataArrayList.get(position).getValue());
+        holder.txt_order_id.setText(mDataArrayList.get(position).getEntity_id());
+        holder.txtProcessing.setText(mDataArrayList.get(position).getStatus());
 
-        if (holder.txtProcessing.getText().equals("Pending")) {
+        //for date conversion
+        StringTokenizer mDate = new StringTokenizer(mDataArrayList.get(position).getCreated_at(), " ");
+        String date = mDate.nextToken();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date testDate = null;
+        try {
+            testDate = sdf.parse(date);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String newFormat = formatter.format(testDate);
+        holder.txtDate.setText("" + newFormat);
+
+        if (holder.txtProcessing.getText().equals("pending")) {
             holder.txtProcessing.setTextColor(mContext.getResources().getColor(R.color.color_orange));
-        } else if (holder.txtProcessing.getText().equals("Processing")) {
+            holder.img_view.setImageResource(R.drawable.pending);
+        } else if (holder.txtProcessing.getText().equals("processing")) {
             holder.txtProcessing.setTextColor(mContext.getResources().getColor(R.color.color_sky_blue));
-        } else if (holder.txtProcessing.getText().equals("Completed")) {
+            holder.img_view.setImageResource(R.drawable.processing);
+        } else if (holder.txtProcessing.getText().equals("completed")) {
             holder.txtProcessing.setTextColor(mContext.getResources().getColor(R.color.color_green));
+            holder.img_view.setImageResource(R.drawable.checked);
         }
 
         holder.llayout_listing.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +82,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         .putExtra("getOrderStatus", "" + holder.txtProcessing.getText()));
             }
         });
-
 
     }
 
@@ -79,6 +99,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         TextView txtProcessing;
         @BindView(R.id.llayout_listing)
         LinearLayout llayout_listing;
+        @BindView(R.id.txtDate)
+        TextView txtDate;
 
         ViewHolder(@NonNull View view) {
             super(view);

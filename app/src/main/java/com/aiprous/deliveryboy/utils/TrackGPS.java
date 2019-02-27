@@ -223,7 +223,7 @@ public class TrackGPS extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        DeliveryBoyApp.onSaveLatiLong("" + location.getLatitude() + "," + location.getLongitude());
+        DeliveryBoyApp.onSaveLatiLong("" + location.getLatitude() ,"" + location.getLongitude());
     }
 
     @Override

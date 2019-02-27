@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import com.aiprous.deliveryboy.MainActivity;
 import com.aiprous.deliveryboy.R;
+import com.aiprous.deliveryboy.application.DeliveryBoyApp;
 import com.aiprous.deliveryboy.utils.BaseActivity;
 
 
@@ -39,8 +41,14 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    Intent lIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(lIntent);
+
+                    if (DeliveryBoyApp.onGetEmail().isEmpty()) {
+                        Intent lIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(lIntent);
+                    } else {
+                        Intent lIntent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(lIntent);
+                    }
                     finish();
                 }
             }

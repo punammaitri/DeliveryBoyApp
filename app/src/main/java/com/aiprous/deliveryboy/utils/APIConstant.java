@@ -6,7 +6,10 @@ public class APIConstant {
     //API BASE URL
     public static String LOGIN = "http://user8.itsindev.com/medibox/API/delivery-boy/login.php";
     public static String GETUSERINFO = "http://user8.itsindev.com/medibox/API/customer_self.php";
+    public static String GETALLORDERDETAIL = "http://user8.itsindev.com/medibox/API/delivery-boy/delivery-boy-orders.php";
     public static String DELIVERYBOY_TRACKING = "http://user8.itsindev.com/medibox/API/deliveryboy_tracking.php?order_id=";
+    /*public static String GETUSERINFO = "http://user8.itsindev.com/medibox/API/delivery-boy-orders.php";
+    public static String GETUSERINFO = "http://user8.itsindev.com/medibox/API/customer_self.php";*/
 
     //Response Status Code
     public static final int SUCCESS_CODE = 200;

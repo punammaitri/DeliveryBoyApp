@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aiprous.deliveryboy.activity.LoginActivity;
 import com.aiprous.deliveryboy.activity.OrderActivity;
@@ -62,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
     private RecyclerView rvForNavigation;
     private NavAdaptor navAdaptor;
 
+    @BindView(R.id.txtUsername)
+    TextView txtUsername;
+    @BindView(R.id.txtEmail)
+    TextView txtEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-       // homeFragment = new HomeFragment(this);
+        // homeFragment = new HomeFragment(this);
         dashboardFragment = new DashboardFragment(this);
         setDrawerToggle();
         addFragment();
@@ -106,6 +112,10 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
 
     private void setDrawerToggle() {
         rvForNavigation = (RecyclerView) navView.findViewById(R.id.rvForNavigation);
+
+        txtUsername.setText(DeliveryBoyApp.onGetName());
+        txtEmail.setText(DeliveryBoyApp.onGetEmail());
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         rvForNavigation.setLayoutManager(layoutManager);
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbarMain,
@@ -160,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
             }
             addFragment();
             return;
-        }else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))) {
+        } else if (name.equalsIgnoreCase(mContext.getResources().getString(R.string.txt_orders))) {
             startActivity(new Intent(mContext, OrderActivity.class));
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
@@ -249,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements NavItemClicked {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         overridePendingTransition(R.anim.right_in, R.anim.left_out);
                         startActivity(intent);
-                        DeliveryBoyApp.onSaveLoginDetail("", "", "", "", "", "", "");
+                        DeliveryBoyApp.onSaveLoginDetail("", "", "", "", "");
                         finish();
                     }
                 })

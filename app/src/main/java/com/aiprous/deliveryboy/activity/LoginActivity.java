@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("username", lEmailMobile);
+                        jsonObject.put("email", lEmailMobile);
                         jsonObject.put("password", lPass);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("username", lEmailMobile);
+                        jsonObject.put("email", lEmailMobile);
                         jsonObject.put("password", lPass);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -148,81 +148,33 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
-
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-                     /*   try {
-                            String getResponse = response.getString("response");
-                            if (getResponse.contains("{")) {
-                                // for removing braces
-                                CustomProgressDialog.getInstance().dismissDialog();
-                                String afterRemoveBrace = getResponse.replace("{", "").replace("}", "");
-                                StringTokenizer getMessage = new StringTokenizer(afterRemoveBrace, ":");
-                                String msg = getMessage.nextToken();
-                                String error_msg = getMessage.nextToken();
-                                Toast.makeText(LoginActivity.this, "Check login credentials", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (!isNetworkAvailable(LoginActivity.this)) {
-                                    CustomProgressDialog.getInstance().showDialog(mContext, mContext.getResources().getString(R.string.check_your_network), APIConstant.ERROR_TYPE);
-                                } else {
-                                    getUserInfo(getResponse);
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        CustomProgressDialog.getInstance().dismissDialog();
-                        Toast.makeText(LoginActivity.this, "Error loading data", Toast.LENGTH_SHORT).show();
-                        Log.e("Error", "onError errorCode : " + error.getErrorCode());
-                        Log.e("Error", "onError errorBody : " + error.getErrorBody());
-                        Log.e("Error", "onError errorDetail : " + error.getErrorDetail());
-                    }
-                });
-    }
-
-    private void getUserInfo(final String bearerToken) {
-        AndroidNetworking.get(GETUSERINFO)
-                .addHeaders(Authorization, BEARER + bearerToken)
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JsonObject responseObject = getAllResponse.get("response").getAsJsonObject();
-                            String status = responseObject.get("status").getAsString();
-                            if (status.equals("success")) {
-                                JsonObject responseObjects = responseObject.get("data").getAsJsonObject();
-                                String getId = responseObjects.get("id").getAsString();
-                                String getGroupId = responseObjects.get("group_id").getAsString();
-                                String getEmail = responseObjects.get("email").getAsString();
-                                String getFirstname = responseObjects.get("firstname").getAsString();
-                                String getLastname = responseObjects.get("lastname").getAsString();
-                                String getStoreId = responseObjects.get("store_id").getAsString();
-                                String getWebsiteId = responseObjects.get("website_id").getAsString();
-                                JsonArray custom_attributes_array = responseObjects.get("custom_attributes").getAsJsonArray();
+                            JsonObject responseObject = getAllResponse.get("user_data").getAsJsonObject();
+                            String status = getAllResponse.get("status").getAsString();
 
-                                if (custom_attributes_array != null) {
-                                    for (int j = 0; j < custom_attributes_array.size(); j++) {
-                                        JsonObject customObject = custom_attributes_array.get(j).getAsJsonObject();
-                                        getMobileNumber = customObject.get("value").getAsString();
-                                    }
-                                }
-                                DeliveryBoyApp.onSaveLoginDetail(getId, bearerToken, getFirstname, getLastname, getMobileNumber, getEmail, getStoreId);
+                            if (status.equals("success")) {
+                                String id = responseObject.get("seller_id").getAsString();
+                                String name = responseObject.get("name").getAsString();
+                                String email = responseObject.get("email").getAsString();
+                                String mobile = responseObject.get("mobile").getAsString();
+                                String vehicle_type = responseObject.get("vehicle_type").getAsString();
+                                String vehicle_number = responseObject.get("vehicle_number").getAsString();
+                                String api_token = responseObject.get("api_token").getAsString();
+
+                                //to save data
+                                DeliveryBoyApp.onSaveLoginDetail(id, api_token, name, mobile, email);
+
                                 Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class)
-                                        .putExtra("email", "" + getEmail));
+                                        .putExtra("email", "" + email));
                                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 finish();
+                            } else {
+                                String msg = getAllResponse.get("message").getAsString();
+                                Toast.makeText(mContext, "" + msg, Toast.LENGTH_SHORT).show();
                             }
+                            CustomProgressDialog.getInstance().dismissDialog();
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
                         }
