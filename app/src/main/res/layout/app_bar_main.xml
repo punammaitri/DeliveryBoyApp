@@ -38,7 +38,8 @@
                         android:id="@+id/rlayout_cart"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true">
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true">
 
                         <TextView
                             android:layout_width="20dp"
@@ -47,7 +48,7 @@
                             android:layout_marginTop="@dimen/height_4"
                             android:background="@drawable/border_circle"
                             android:gravity="center"
-                            android:text="2"
+                            android:text="0"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/colorwhite" />
 

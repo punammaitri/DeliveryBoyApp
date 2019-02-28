@@ -48,6 +48,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         holder.txt_order_id.setText(mDataArrayList.get(position).getEntity_id());
         holder.txtProcessing.setText(mDataArrayList.get(position).getStatus());
+        holder.tv_content.setText(mDataArrayList.get(position).getAddress());
 
         //for date conversion
         StringTokenizer mDate = new StringTokenizer(mDataArrayList.get(position).getCreated_at(), " ");
@@ -57,7 +58,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         Date testDate = null;
         try {
             testDate = sdf.parse(date);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -101,6 +102,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         LinearLayout llayout_listing;
         @BindView(R.id.txtDate)
         TextView txtDate;
+        @BindView(R.id.tv_content)
+        TextView tv_content;
 
         ViewHolder(@NonNull View view) {
             super(view);

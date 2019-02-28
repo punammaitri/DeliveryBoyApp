@@ -74,13 +74,6 @@
                 android:text="Flat No. 104, Green Olive" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_content"
-                android:fontFamily="@font/open_sans_regular"
-                android:text="Amount: Rs. 125" />
-
-            <TextView
                 android:id="@+id/txtProcessing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

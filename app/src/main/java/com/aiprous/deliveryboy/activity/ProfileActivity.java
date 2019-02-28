@@ -1,10 +1,11 @@
 package com.aiprous.deliveryboy.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
 import com.aiprous.deliveryboy.R;
+import com.aiprous.deliveryboy.application.DeliveryBoyApp;
 import com.aiprous.deliveryboy.utils.BaseActivity;
 
 import butterknife.BindView;
@@ -15,8 +16,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.txtTitle)
     TextView txtTitle;
-    @BindView(R.id.txtEdit)
-    TextView txtEdit;
+    @BindView(R.id.txtUsername)
+    TextView txtUsername;
+    @BindView(R.id.txtMobileNumber)
+    TextView txtMobileNumber;
+    @BindView(R.id.txtEmail)
+    TextView txtEmail;
+    @BindView(R.id.txtDob)
+    TextView txtDob;
+    @BindView(R.id.txtVehicleType)
+    TextView txtVehicleType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,11 @@ public class ProfileActivity extends AppCompatActivity {
         BaseActivity baseActivity = new BaseActivity();
         baseActivity.changeStatusBarColor(this);
 
+        txtUsername.setText(DeliveryBoyApp.onGetName());
+        txtEmail.setText(DeliveryBoyApp.onGetEmail());
+        txtMobileNumber.setText(DeliveryBoyApp.onGetMobileNo());
+        txtUsername.setText(DeliveryBoyApp.onGetName());
+        txtVehicleType.setText(DeliveryBoyApp.onGetVehicleType());
     }
 
     @OnClick(R.id.rlayout_back_button)
@@ -40,8 +54,4 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
     }
 
-    @OnClick(R.id.txtEdit)
-    public void onViewClicked() {
-        startActivity(new Intent(this, EditProfileActivity.class));
-    }
 }

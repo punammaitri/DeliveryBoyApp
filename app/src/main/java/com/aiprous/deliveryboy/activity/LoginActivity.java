@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String api_token = responseObject.get("api_token").getAsString();
 
                                 //to save data
-                                DeliveryBoyApp.onSaveLoginDetail(id, api_token, name, mobile, email);
+                                DeliveryBoyApp.onSaveLoginDetail(id, api_token, name, mobile, email,vehicle_type);
 
                                 Toast.makeText(mContext, "Login successfully", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class)

@@ -19,8 +19,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,42 +115,42 @@ public class OrderActivity extends AppCompatActivity {
                         // do anything with response
                         try {
                             JsonObject getAllResponse = (JsonObject) new JsonParser().parse(response.toString());
-                            JSONObject getAllObject = new JSONObject(getAllResponse.toString()); //first, get the jsonObject
-                            JSONArray getAllProductList = getAllObject.getJSONArray("data");//get the array with the key "response"
+                            String status = getAllResponse.get("status").getAsString();
 
-                            if (getAllProductList != null) {
+                            if (status.equals("success")) {
+                                JsonArray getAllProductList = getAllResponse.get("data").getAsJsonArray();
+
                                 mlistModelsArray.clear();
-                                for (int i = 0; i < getAllProductList.length(); i++) {
-
-                                    String increment_id = "Order #" + getAllProductList.getJSONObject(i).get("increment_id").toString();
-                                    String status = getAllProductList.getJSONObject(i).get("status").toString();
-                                    String created_at = getAllProductList.getJSONObject(i).get("created_at").toString();
+                                for (int i = 0; i < getAllProductList.size(); i++) {
+                                    JsonObject mAllData = getAllProductList.get(i).getAsJsonObject();
+                                    String increment_id = "Order #" + mAllData.get("increment_id").getAsString();
+                                    String mStatus = mAllData.get("status").getAsString();
+                                    String created_at = mAllData.get("created_at").getAsString();
 
                                     //To access address
-                                    JSONObject shipping_address = getAllObject.getJSONObject("shipping_address");
-                                    String mAddress = shipping_address.getString("street");
-                                    String mCity = shipping_address.getString("city");
+                                    JsonObject mShippingAddress = mAllData.get("shipping_address").getAsJsonObject();
+                                    String mAddress = mShippingAddress.get("street").getAsString();
+                                    String mCity = mShippingAddress.get("city").getAsString();
                                     String fullAddress = mAddress + "," + mCity;
 
-                                    AllOrderModel.Data allOrderModel = new AllOrderModel.Data(increment_id, status, created_at, fullAddress);
+                                    //add to constructor
+                                    AllOrderModel.Data allOrderModel = new AllOrderModel.Data(increment_id, mStatus, created_at, fullAddress);
                                     allOrderModel.setEntity_id(increment_id);
-                                    allOrderModel.setStatus(status);
+                                    allOrderModel.setStatus(mStatus);
                                     allOrderModel.setCreated_at(created_at);
                                     allOrderModel.setAddress(fullAddress);
-
                                     mlistModelsArray.add(allOrderModel);
                                 }
+
+                                layoutManager = new LinearLayoutManager(mContext);
+                                rc_medicine_list.setLayoutManager(new LinearLayoutManager(OrderActivity.this, LinearLayoutManager.VERTICAL, false));
+                                rc_medicine_list.setHasFixedSize(true);
+                                rc_medicine_list.setAdapter(new OrderAdapter(mContext, mlistModelsArray));
                             }
-                            layoutManager = new LinearLayoutManager(mContext);
-                            rc_medicine_list.setLayoutManager(new LinearLayoutManager(OrderActivity.this, LinearLayoutManager.VERTICAL, false));
-                            rc_medicine_list.setHasFixedSize(true);
-                            rc_medicine_list.setAdapter(new OrderAdapter(mContext, mlistModelsArray));
-
                             CustomProgressDialog.getInstance().dismissDialog();
-
-                        } catch (JSONException e) {
-                            CustomProgressDialog.getInstance().dismissDialog();
+                        } catch (JsonSyntaxException e) {
                             e.printStackTrace();
+                            CustomProgressDialog.getInstance().dismissDialog();
                         }
                     }
 
